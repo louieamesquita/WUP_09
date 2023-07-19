@@ -1,7 +1,7 @@
 ---
 title: "Weight of Fish"
 author: "Louie A"
-date: "`r Sys.Date()`"  
+date: "`7/19/2023)`"  
 output: 
   html_document:
     number_sections: true
@@ -49,12 +49,42 @@ Whitefish <- select(Whitefish, -Species)
 
 ## Perch
 
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Perch,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="topright",main="Adjusted R^2")
+```
+
+
+
+
 ### Best Models
 
 ### Best Two regressor model
 
+```{r}
+Perchmodel <-lm(Weight~Height+Width, data=Perch)
+summary.lm(Perchmodel)
+```
+
+
 
 ## Pike
+
+```{r}
+Perchmodel <-lm(Weight~Height+Width, data=Perch)
+summary.lm(Perchmodel)
+```
 
 ### Best Models
 
